@@ -15,7 +15,7 @@ from keras.datasets import imdb
 from sklearn.metrics import accuracy_score,classification_report
 
 
-# set parameters:
+# 파라미터 설정:
 max_features = 6000
 max_length = 400
 
@@ -26,7 +26,7 @@ print(len(x_train), 'train observations')
 print(len(x_test), 'test observations')
 
 
-# Creating numbers to word mapping 
+# 단어 대 숫자 매핑 생성 
 wind = imdb.get_word_index()
 revind = dict((v,k) for k,v in wind.iteritems())
 
@@ -44,14 +44,14 @@ def decode(sent_list):
 print (decode(x_train[0]))
 
 
-#Pad sequences for computational efficiency
+# 효율적인 연산을 위한 패드 배열
 x_train = sequence.pad_sequences(x_train, maxlen=max_length)
 x_test = sequence.pad_sequences(x_test, maxlen=max_length)
 print('x_train shape:', x_train.shape)
 print('x_test shape:', x_test.shape)
 
 
-# Deep Learning architecture parameters
+# 딥러닝 아키텍쳐 파라미터
 batch_size = 32
 embedding_dims = 60
 num_kernels = 260
@@ -60,7 +60,7 @@ hidden_dims = 300
 epochs = 3
 
 
-# Building the model
+# 모델 구축
 model = Sequential()
 
 model.add(Embedding(max_features,embedding_dims,input_length=max_length))
@@ -83,7 +83,7 @@ print (model.summary())
 model.fit(x_train, y_train,batch_size=batch_size,epochs=epochs,validation_split=0.2)
 
 
-#Model Prediction
+# 모델 예측
 y_train_predclass = model.predict_classes(x_train,batch_size=batch_size)
 y_test_predclass = model.predict_classes(x_test,batch_size=batch_size)
 
@@ -91,7 +91,7 @@ y_train_predclass.shape = y_train.shape
 y_test_predclass.shape = y_test.shape
 
 
-# Model accuracies & metrics calculation
+# 모델 정확도 및 메트릭 계산
 print (("\n\nCNN 1D  - Train accuracy:"),(round(accuracy_score(y_train,y_train_predclass),3)))
 print ("\nCNN 1D of Training data\n",classification_report(y_train, y_train_predclass))
 print ("\nCNN 1D - Train Confusion Matrix\n\n",pd.crosstab(y_train, y_train_predclass,rownames = ["Actuall"],colnames = ["Predicted"]))      

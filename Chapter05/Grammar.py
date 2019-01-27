@@ -24,4 +24,4 @@ print(grammar)
 
 for sentence in generate(grammar, n=5, depth=5):
     palindrome = "".join(sentence).replace(" ", "")
-    print("Generated Word: {}, Size : {}".format(palindrome, len(palindrome)))
+    print("생성된 단어: {}, 크기: {}".format(palindrome, len(palindrome)))

@@ -11,17 +11,17 @@ x_test = newsgroups_test.data
 y_train = newsgroups_train.target
 y_test = newsgroups_test.target
 
-print ("List of all 20 categories:")
+print ("20개 카테고리 전체 목록:")
 print (newsgroups_train.target_names)
 print ("\n")
-print ("Sample Email:")
+print ("샘플 이메일:")
 print (x_train[0])
-print ("Sample Target Category:")
+print ("샘플 타깃 카테고리:")
 print (y_train[0])
 print (newsgroups_train.target_names[y_train[0]])
 
 
-# Used for pre-processing data
+# 데이터 전처리에 사용
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
@@ -79,7 +79,7 @@ x_test_preprocessed = []
 for i in x_test:
 	x_test_preprocessed.append(preprocessing(i))
 
-# building TFIDF vectorizer 
+# TFIDF 벡터라이저(vectorizer) 구축 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 vectorizer = TfidfVectorizer(min_df=2, ngram_range=(1, 2),  stop_words='english', 
@@ -89,14 +89,14 @@ x_train_2 = vectorizer.fit_transform(x_train_preprocessed).todense()
 x_test_2 = vectorizer.transform(x_test_preprocessed).todense()
 
 
-# Deep Learning modules
+# 딥러닝 모듈
 import numpy as np
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation
 from keras.optimizers import Adadelta,Adam,RMSprop
 from keras.utils import np_utils
 
-# Definiting hyper parameters
+# 하이퍼 파라미터 정의
 np.random.seed(1337) 
 nb_classes = 20
 batch_size = 64
@@ -104,9 +104,7 @@ nb_epochs = 20
 
 Y_train = np_utils.to_categorical(y_train, nb_classes)
 
-#Deep Layer Model building in Keras
-#del model
-
+# 케라스에서의 딥 레이어(심층) 모델 구축
 model = Sequential()
 
 model.add(Dense(1000,input_shape= (10000,)))
@@ -128,21 +126,21 @@ model.compile(loss='categorical_crossentropy', optimizer='adam')
 
 print (model.summary())
 
-# Model Training
+# 모델 학습
 model.fit(x_train_2, Y_train, batch_size=batch_size, epochs=nb_epochs,verbose=1)
 
-#Model Prediction
+# 모델 예측
 y_train_predclass = model.predict_classes(x_train_2,batch_size=batch_size)
 y_test_predclass = model.predict_classes(x_test_2,batch_size=batch_size)
 
 from sklearn.metrics import accuracy_score,classification_report
 
-print ("\n\nDeep Neural Network  - Train accuracy:"),(round(accuracy_score(y_train,y_train_predclass),3))
-print ("\nDeep Neural Network  - Test accuracy:"),(round(accuracy_score(y_test,y_test_predclass),3))
+print ("\n\n딥 뉴럴 네트워크  - 학습 정확도:"),(round(accuracy_score(y_train,y_train_predclass),3))
+print ("\n딥 뉴럴 네트워크  - 테스트 정확도:"),(round(accuracy_score(y_test,y_test_predclass),3))
 
-print ("\nDeep Neural Network  - Train Classification Report")
+print ("\n딥 뉴럴 네트워크  - 학습 분류 리포트(Train Classification Report)")
 print (classification_report(y_train,y_train_predclass))
 
-print ("\nDeep Neural Network  - Test Classification Report")
+print ("\n딥 뉴럴 네트워크  - 테스트 분류 리포트(Test Classification Report)")
 print (classification_report(y_test,y_test_predclass))
 							 

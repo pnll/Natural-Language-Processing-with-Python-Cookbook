@@ -2,8 +2,8 @@
 from __future__ import print_function
 
 import os
-""" First change the following directory link to where all input files do exist """
-os.chdir("C:\\Users\\prata\\Documents\\book_codes\\NLP_DL")
+""" 먼저 다음 디렉토리 링크를 모든 입력 파일이 있는 곳으로 변경하시오 """
+os.chdir("C:/Users/[사용자이름]/Documents/book_codes/NLP_DL")
 
 
 
@@ -147,10 +147,10 @@ history.compile(optimizer = "rmsprop",loss="categorical_crossentropy",metrics=["
 history.fit(Xtrain, Ytrain, batch_size=BATCH_SIZE,epochs=NUM_EPOCHS, verbose=1,validation_split = 0.2)
 
 
-# Extracting Encoder section of the Model for prediction of latent variables
+# 잠재 변수 예측을 위해 모델의 인코더 부분 추출
 encoder = Model(history.input,history.get_layer("second").output)
 
-# Predicting latent variables with extracted Encoder model
+# 추출된 인코더 모델을 사용하여 잠재 변수 예측
 reduced_X = encoder.predict(Xtest)
 
 
@@ -167,7 +167,7 @@ vis_df = final_pdframe.ix[rows]
 labels = list(vis_df["word"]);xvals = list(vis_df["xaxis"])
 yvals = list(vis_df["yaxis"])
 
-#in inches
+# 인치 단위
 plt.figure(figsize=(10, 10))  
 
 for i, label in enumerate(labels):

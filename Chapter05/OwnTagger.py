@@ -22,7 +22,7 @@ def learnRETagger(simpleSentence):
 def learnLookupTagger(simpleSentence):
     mapping = {
         '.': '.', 'place': 'NN', 'on': 'IN',
-        'earth': 'NN', 'Mysore' : 'NNP', 'is': 'VBZ',
+        'earth': 'NN', 'Reykjavik' : 'NNP', 'is': 'VBZ',
         'an': 'DT', 'amazing': 'JJ'
     }
     tagger = nltk.UnigramTagger(model=mapping)
@@ -31,7 +31,7 @@ def learnLookupTagger(simpleSentence):
     print(posEnabledTags)
 
 if __name__ == '__main__':
-    testSentence = "Mysore is an amazing place on earth. I have visited Mysore 10 times."
+    testSentence = "Reykjavik is an amazing place on earth. I have visited Reykjavik 10 times."
     learnDefaultTagger(testSentence)
     learnRETagger(testSentence)
     learnLookupTagger(testSentence)

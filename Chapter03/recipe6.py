@@ -22,14 +22,14 @@ story1 = story1.replace(",", "").replace("\n", "").replace('.', '').replace('"',
 story2 = story2.replace(",", "").replace("\n", "").replace('.', '').replace('"', '').replace("!","").replace("?","").casefold()
 
 story1_words = story1.split(" ")
-print("First Story words :",story1_words)
+print("첫 번째 이야기 단어 :", story1_words)
 story2_words = story2.split(" ")
-print("Second Story words :",story2_words)
+print("두 번째 이야기 단어 :", story2_words)
 
 story1_vocab = set(story1_words)
-print("First Story vocabulary :",story1_vocab)
+print("첫 번째 이야기 어휘 :", story1_vocab)
 story2_vocab = set(story2_words)
-print("Second Story vocabulary",story2_vocab)
+print("두 번째 이야기 어휘 :", story2_vocab)
 
 common_vocab = story1_vocab & story2_vocab
-print("Common Vocabulary :",common_vocab)
+print("공통 어휘 :", common_vocab)

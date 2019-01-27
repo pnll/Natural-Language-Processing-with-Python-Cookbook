@@ -1,6 +1,3 @@
-
-
-
 from __future__ import print_function
 
 from keras.models import Sequential
@@ -13,7 +10,7 @@ import random
 import sys
 
 
-path = 'C:\\Users\\prata\\Documents\\book_codes\\NLP_DL\\shakespeare_final.txt'
+path = 'shakespeare_final.txt'
 text = open(path).read().lower()
 
 print('corpus length:', len(text))
@@ -27,7 +24,7 @@ indices2char = dict((i, c) for i, c in enumerate(characters))
 
 
 
-# cut the text in semi-redundant sequences of maxlen characters
+# 텍스트를 어느정도 불필요한 부분은 최대길이(maxlen) 문자로 일련의 문자열씩 자른다.
 maxlen = 40
 step = 3
 sentences = []
@@ -39,7 +36,7 @@ print('nb sequences:', len(sentences))
 
 
 
-# Converting indices into vectorized format
+# 인덱스를 벡터화된 형태로 변환
 X = np.zeros((len(sentences), maxlen, len(characters)), dtype=np.bool)
 y = np.zeros((len(sentences), len(characters)), dtype=np.bool)
 for i, sentence in enumerate(sentences):
@@ -50,7 +47,7 @@ for i, sentence in enumerate(sentences):
 
 
 	
-#Model Building
+# 모델 구축
 model = Sequential()
 model.add(LSTM(128, input_shape=(maxlen, len(characters))))
 
@@ -62,7 +59,7 @@ model.compile(loss='categorical_crossentropy', optimizer=RMSprop(lr=0.01))
 print (model.summary())
 
 
-# Function to convert prediction into index
+# 예측을 인덱스로 변환하는 함수
 def pred_indices(preds, metric=1.0):
     preds = np.asarray(preds).astype('float64')
     preds = np.log(preds) / metric
@@ -73,8 +70,7 @@ def pred_indices(preds, metric=1.0):
 
 
 
-# Train & Evaluate the Model
-
+# 모델 학습 및 평가
 for iteration in range(1, 30):
     print('-' * 40)
     print('Iteration', iteration)
@@ -106,7 +102,7 @@ for iteration in range(1, 30):
 
             sys.stdout.write(pred_char)
             sys.stdout.flush()
-        print("\nOne combination completed \n")
+        print("\n하나의 조합 완료\n")
         
         
         

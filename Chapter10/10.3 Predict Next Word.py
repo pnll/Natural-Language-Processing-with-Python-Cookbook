@@ -1,12 +1,8 @@
-
-
-
-
 from __future__ import print_function
 
 import os
-""" First change the following directory link to where all input files do exist """
-os.chdir("C:\\Users\\prata\\Documents\\book_codes\\NLP_DL")
+""" 먼저 다음 디렉토리 링크를 모든 입력 파일이 있는 곳으로 변경하시오 """
+os.chdir("C:/Users/[사용자이름]/Documents/book_codes/NLP_DL")
 
 from sklearn.model_selection import train_test_split
 import nltk
@@ -14,7 +10,7 @@ import numpy as np
 import string
 
 
-# File reading
+# 파일 읽기
 with open('alice_in_wonderland.txt', 'r') as content_file:
     content = content_file.read()
 
@@ -23,8 +19,7 @@ content2 = " ".join("".join([" " if ch in string.punctuation else ch for ch in c
 tokens = nltk.word_tokenize(content2)
 tokens = [word.lower() for word in tokens if len(word)>=2]
 
-# Select value of N for N grams among which N-1 are used to predict last N word
-
+# N-1이 마지막 N번째 단어를 예측하는 데 사용되는 N그램에 대한 N값 선택
 N = 3
 quads = list(nltk.ngrams(tokens,N))
 
@@ -33,7 +28,7 @@ for ln in quads:
     newl = " ".join(ln)        
     newl_app.append(newl)
 
-# Vectorizing the words
+# 단어 벡터화
 from sklearn.feature_extraction.text import CountVectorizer
 vectorizer = CountVectorizer()
 
@@ -49,7 +44,7 @@ for l in newl_app:
 x_trigm_check = vectorizer.fit_transform(x_trigm).todense()
 y_trigm_check = vectorizer.fit_transform(y_trigm).todense()
 
-# Dictionaries from word to integer and integer to word
+# 단어에서 정수, 정수에서 단어로 변환하기 위한 딕셔너리
 dictnry = vectorizer.vocabulary_
 rev_dictnry = {v:k for k,v in dictnry.items()}
 
@@ -61,7 +56,7 @@ Xtrain, Xtest, Ytrain, Ytest,xtrain_tg,xtest_tg = train_test_split(X, Y,x_trigm,
 print("X Train shape",Xtrain.shape, "Y Train shape" , Ytrain.shape)
 print("X Test shape",Xtest.shape, "Y Test shape" , Ytest.shape)
 
-# Model Building
+# 모델 구축
 from keras.layers import Input,Dense,Dropout
 from keras.models import Model
 
@@ -87,14 +82,14 @@ history.compile(optimizer = "adam",loss="categorical_crossentropy",metrics=["acc
 
 print (history.summary())
 
-# Model Training
+# 모델 학습
 history.fit(Xtrain, Ytrain, batch_size=BATCH_SIZE,epochs=NUM_EPOCHS, verbose=1,validation_split = 0.2)
 
-# Model Prediction
+# 모델 예측
 Y_pred = history.predict(Xtest)
 
 
-# Sample check on Test data
+# 테스트 데이터에 대한 샘플 확인
 print ("Prior bigram words","|Actual","|Predicted","\n")
 
 for i in range(10):

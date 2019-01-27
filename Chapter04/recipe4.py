@@ -1,9 +1,9 @@
 import re
 
-url= "http://www.telegraph.co.uk/formula-1/2017/10/28/mexican-grand-prix-2017-time-does-start-tv-channel-odds-lewis1/2017/05/12/"
+url= "http://www.telegraph.co.uk/formula-1/2018/10/28/mexican-grand-prix-2017-time-does-start-tv-channel-odds-lewis1/2017/05/12/"
 date_regex = '/(\d{4})/(\d{1,2})/(\d{1,2})/'
 
-print("Date found in the URL :", re.findall(date_regex, url))
+print("URL에서 찾은 날짜 :", re.findall(date_regex, url))
 
 
 def is_allowed_specific_char(string):

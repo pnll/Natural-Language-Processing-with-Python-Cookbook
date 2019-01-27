@@ -12,7 +12,7 @@ def builtinEngines(whichOne):
     elif whichOne == 'zen':
         nltk.chat.zen.demo()
     else:
-        print("unknown built-in chat engine {}".format(whichOne))
+        print("알 수 없는 내장 채팅 엔진 {}".format(whichOne))
 
 def myEngine():
     chatpairs = (
@@ -34,10 +34,10 @@ def myEngine():
     )
     def chat():
         print("!"*80)
-        print(" >> my Engine << ")
-        print("Talk to the program using normal english")
+        print(" >> 내 엔진 << ")
+        print("일반 영어로 프로그램과 대화")
         print("="*80)
-        print("Enter 'quit' when done")
+        print("완료되면 'quit' 입력")
         chatbot = nltk.chat.util.Chat(chatpairs, nltk.chat.util.reflections)
         chatbot.converse()
 
@@ -45,7 +45,7 @@ def myEngine():
 
 if __name__ == '__main__':
     for engine in ['eliza', 'iesha', 'rude', 'suntsu', 'zen']:
-        print("=== demo of {} ===".format(engine))
+        print("=== {} 데모 ===".format(engine))
         builtinEngines(engine)
         print()
     myEngine()

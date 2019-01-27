@@ -1,6 +1,6 @@
 import re
 
-street = '21 Ramkrishna Road'
+street = '21 Teheran Road'
 print(re.sub('Road', 'Rd', street))
 
 text = 'Diwali is a festival of light, Holi is a festival of color!'

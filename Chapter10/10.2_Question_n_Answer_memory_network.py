@@ -1,6 +1,3 @@
-
-
-
 from __future__ import division, print_function
 
 
@@ -34,20 +31,20 @@ def get_data(infile):
     return stories, questions, answers
 
 
-file_location = "C:/Users/prata/Documents/book_codes/NLP_DL"
+file_location = "C:/Users/[사용자이름]/Documents/book_codes/NLP_DL"
 
 Train_File = os.path.join(file_location, "qa1_single-supporting-fact_train.txt")
 Test_File = os.path.join(file_location, "qa1_single-supporting-fact_test.txt")
 
 
-# get the data
+# 데이터 가져오기
 data_train = get_data(Train_File)
 data_test = get_data(Test_File)
 
 print("\n\nTrain observations:",len(data_train[0]),"Test observations:", len(data_test[0]),"\n\n")
 
 
-# Building Vocab dictionary from Train & Test data
+# 학습 및 테스트 데이터에서 Vocab 딕셔너리 구축
 dictnry = collections.Counter()
 for stories,questions,answers in [data_train,data_test]:
     for story in stories:
@@ -71,7 +68,7 @@ print("vocabulary size:",len(word2indx))
 
 
 
-# compute max sequence length for each entity
+# 각 엔티티의 최대 시퀀스 길이 계산
 story_maxlen = 0
 question_maxlen = 0
 
@@ -95,7 +92,7 @@ print ("Story maximum length:",story_maxlen,"Question maximum length:",question_
 
 
 
-# Converting data into Vectorized form
+# 데이터를 벡터화된 형태로 변환
 def data_vectorization(data, word2indx, story_maxlen, question_maxlen):
     Xs, Xq, Y = [], [], []
     stories, questions, answers = data
@@ -128,7 +125,7 @@ from keras.models import Model
 from keras.preprocessing.sequence import pad_sequences
 from keras.utils import np_utils
 
-# Model Parameters
+# 모델 파라미터
 
 EMBEDDING_SIZE = 128
 LATENT_SIZE = 64
@@ -136,34 +133,34 @@ BATCH_SIZE = 64
 NUM_EPOCHS = 40
 
 
-# Inputs
+# 입력
 story_input = Input(shape=(story_maxlen,))
 question_input = Input(shape=(question_maxlen,))
 
-# Story encoder embedding
+# 스토리 인코더 임베딩
 story_encoder = Embedding(input_dim=vocab_size, output_dim=EMBEDDING_SIZE,
                          input_length=story_maxlen)(story_input)
 story_encoder = Dropout(0.2)(story_encoder)
 
-# Question encoder embedding
+# 질문 인코더 임베딩
 question_encoder = Embedding(input_dim=vocab_size,output_dim=EMBEDDING_SIZE,
                             input_length=question_maxlen)(question_input)
 question_encoder = Dropout(0.3)(question_encoder)
 
-# Match between story and question
+# 스토리와 질문의 일치
 match = dot([story_encoder, question_encoder], axes=[2, 2])
 
-# Encode story into vector space of question
+# 이야기를 질문의 벡터 공간으로 인코딩
 story_encoder_c = Embedding(input_dim=vocab_size,output_dim=question_maxlen,
                            input_length=story_maxlen)(story_input)
 story_encoder_c = Dropout(0.3)(story_encoder_c)
 
 
-# Combine match and story vectors
+# 일치한 내용과 스토리 벡터 결합
 response = add([match, story_encoder_c])
 response = Permute((2, 1))(response)
 
-# Combine response and question vectors to answers space
+# 응답과 질문 벡터를 답변 공간에 결합
 answer = concatenate([response, question_encoder], axis=-1)
 answer = LSTM(LATENT_SIZE)(answer)
 answer = Dropout(0.2)(answer)
@@ -177,13 +174,12 @@ model.compile(optimizer="adam", loss="categorical_crossentropy",metrics=["accura
 print (model.summary())
 
 
-# Model Training
+# 모델 학습
 history = model.fit([Xstrain, Xqtrain], [Ytrain], batch_size=BATCH_SIZE, 
                     epochs=NUM_EPOCHS,validation_data=([Xstest, Xqtest], [Ytest]))
-                    
+                   
 					
-					
-# plot accuracy and loss plot
+# 정확도와 손실도 플롯
 plt.title("Episodic Memory Q & A Accuracy")
 plt.plot(history.history["acc"], color="g", label="train")
 plt.plot(history.history["val_acc"], color="r", label="validation")
@@ -192,15 +188,12 @@ plt.legend(loc="best")
 plt.show()
 
 
-
-# get predictions of labels
-
+# 레이블 예측 가져오기
 ytest = np.argmax(Ytest, axis=1)
 Ytest_ = model.predict([Xstest, Xqtest])
 ytest_ = np.argmax(Ytest_, axis=1)
 
-# Select Random questions and predict answers
-
+# 무작위로 질문을 선택하고 답변을 예측
 NUM_DISPLAY = 10
    
 for i in random.sample(range(Xstest.shape[0]),NUM_DISPLAY):

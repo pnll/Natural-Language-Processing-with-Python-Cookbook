@@ -1,9 +1,9 @@
 from nltk.corpus import wordnet as wn
 
-chair = 'bat'
+chair = 'chair'
 
 chair_synsets = wn.synsets(chair)
-print('Synsets/Senses of Chair :', chair_synsets, '\n\n')
+print('의자(Chair)의 뜻 Synsets :', chair_synsets, '\n\n')
 
 for synset in chair_synsets:
     print(synset, ': ')

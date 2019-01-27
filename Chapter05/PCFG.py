@@ -25,4 +25,4 @@ print(grammar)
 
 for sentence in generate(grammar, n=10, depth=5):
     palindrome = "".join(sentence).replace(" ", "")
-    print("String : {}, Size : {}".format(palindrome, len(palindrome)))
+    print("문자열 : {}, 크기 : {}".format(palindrome, len(palindrome)))

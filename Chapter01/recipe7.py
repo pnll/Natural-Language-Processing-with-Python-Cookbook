@@ -10,11 +10,11 @@ for synset in synsets:
 
 print(len(lemmas))
 lemmas = set(lemmas)
-print('Total distinct lemmas: ', len(lemmas))
+print('개별 기본형 합계: ', len(lemmas))
 
 count = 0
 for lemma in lemmas:
     count = count + len(wn.synsets(lemma, type))
 
-print('Total senses :',count)
-print('Average Polysemy of ', type,': ' ,  count/len(lemmas))
+print('총 뜻: ', count)
+print(type, '(명사)의 다의어 평균: ', count/len(lemmas))

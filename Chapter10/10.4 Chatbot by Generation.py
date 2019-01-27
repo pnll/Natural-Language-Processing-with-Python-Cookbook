@@ -1,18 +1,12 @@
-
-
-
-
-
 import os
-""" First change the following directory link to where all input files do exist """
-os.chdir("C:\\Users\\prata\\Documents\\book_codes\\NLP_DL")
+""" 먼저 다음 디렉토리 링크를 모든 입력 파일이 있는 곳으로 변경하시오 """
+os.chdir("C:/Users/[사용자이름]/Documents/book_codes/NLP_DL")
 
 import numpy as np
 import pandas as pd
 
 
-# File reading
-
+# 파일 읽기
 with open('bot.txt', 'r') as content_file:
     botdata = content_file.read()
     
@@ -40,7 +34,7 @@ QnAdata["QnAcomb"] = QnAdata["Questions"]+" "+QnAdata["Answers"]
 print(QnAdata.head())
 
 
-# Creating Vocabulary
+# 단어장 생성
 import nltk
 import collections
 
@@ -105,8 +99,7 @@ answs_train = create_answers(answer_maxlen=answer_maxlen,vocab_size=vocab_size)
 
 
 
-# Model was working fine with correct architecture
-
+# 올바른 아키텍처로 모델이 잘 작동했음
 from keras.layers import Input,Dense,Dropout,Activation
 from keras.models import Model
 from keras.layers.recurrent import LSTM
@@ -138,17 +131,17 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 print (model.summary())
 
 
-# Readers encouraged to try this
+# 여러분은 다음을 시도해보기 바랍니다.
 #encoder_rnn = Bidirectional(LSTM(n_hidden,dropout=0.2,recurrent_dropout=0.2),merge_mode='concat')(question_layer)
 
-# Model Training
+# 모델 학습
 quesns_train_2 = quesns_train.astype('float32')
 answs_train_2 = answs_train.astype('float32')
 
 model.fit(quesns_train_2, answs_train_2,batch_size=32,epochs=30,validation_split=0.05)
 
 
-# Model preidciton
+# 모델 예측
 ans_pred = model.predict(quesns_train_2[0:3])
 
 print (decode(ans_pred[0]))

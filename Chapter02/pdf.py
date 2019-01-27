@@ -6,6 +6,6 @@ def getTextPDF(pdfFileName, password = ''):
     if password != '':
         read_pdf.decrypt(password)
     text = []
-    for i in range(0,read_pdf.getNumPages()):
+    for i in range(0,read_pdf.getNumPages()-1):
         text.append(read_pdf.getPage(i).extractText())
     return '\n'.join(text)

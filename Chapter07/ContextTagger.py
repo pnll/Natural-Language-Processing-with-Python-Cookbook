@@ -19,13 +19,13 @@ def noContextTagger():
     print(tagger.tag('the little remarks towards assembly are laughable'.split()))
 def withContextTagger():
     def wordFeatures(words, wordPosInSentence):
-        # extract all the ing forms etc
+        # 모든 ing 형태 등을 추출
         endFeatures = {
             'last(1)': words[wordPosInSentence][-1],
             'last(2)': words[wordPosInSentence][-2:],
             'last(3)': words[wordPosInSentence][-3:],
         }
-        # use previous word to determine if the current word is verb or noun
+        # 이전 단어를 사용해 현재 단어가 동사인지 명사인지 확인
         if wordPosInSentence > 1:
             endFeatures['prev'] = words[wordPosInSentence - 1]
         else:
@@ -41,7 +41,7 @@ def withContextTagger():
     traindata = featureddata[breakup:]
     testdata = featureddata[:breakup]
     classifier = nltk.NaiveBayesClassifier.train(traindata)
-    print("Accuracy of the classifier : {}".format(nltk.classify.accuracy(classifier, testdata)))
+    print("분류기 정확도 : {}".format(nltk.classify.accuracy(classifier, testdata)))
 
 noContextTagger()
 withContextTagger()

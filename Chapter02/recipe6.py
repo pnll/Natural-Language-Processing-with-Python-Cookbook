@@ -1,9 +1,9 @@
 import feedparser
 
 myFeed = feedparser.parse("http://feeds.mashable.com/Mashable")
-print('Feed Title :', myFeed['feed']['title'])
-print('Number of posts :', len(myFeed.entries))
+print('피드 제목 :', myFeed['feed']['title'])
+print('포스트 수 :', len(myFeed.entries))
 post = myFeed.entries[0]
-print('Post Title :',post.title)
+print('포스트 제목 :', post.title)
 content = post.content[0].value
-print('Raw content :\n',content)
+print('콘텐츠 원본 :\n', content)
